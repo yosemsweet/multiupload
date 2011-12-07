@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @bucket.name
+
+= link_to 'Edit', edit_bucket_path(@bucket)
+\|
+= link_to 'Back', buckets_path

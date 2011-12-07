@@ -1,0 +1,19 @@
+%h1 Listing buckets
+
+%table
+  %tr
+    %th Name
+    %th
+    %th
+    %th
+
+  - @buckets.each do |bucket|
+    %tr
+      %td= bucket.name
+      %td= link_to 'Show', bucket
+      %td= link_to 'Edit', edit_bucket_path(bucket)
+      %td= link_to 'Destroy', bucket, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Bucket', new_bucket_path
