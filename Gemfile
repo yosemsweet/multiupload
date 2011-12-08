@@ -32,7 +32,7 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
+gem 'ruby-debug19', :require => 'ruby-debug', :group => [:development, :test]
 
 # install a Javascript runtime for linux
 if HOST_OS =~ /linux/i
@@ -42,7 +42,7 @@ end
 gem "haml", ">= 3.1.2"
 gem "haml-rails", ">= 0.3.4", :group => :development
 gem "rspec-rails", ">= 2.8.0.rc1", :group => [:development, :test]
-gem "factory_girl_rails", ">= 1.4.0", :group => :test
+gem "factory_girl_rails", ">= 1.4.0", :group => [:development, :test]
 gem "cucumber-rails", ">= 1.2.0", :group => :test
 gem "capybara", ">= 1.1.2", :group => :test
 gem "database_cleaner", ">= 0.7.0", :group => :test

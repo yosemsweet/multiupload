@@ -3,4 +3,9 @@ class Asset < ActiveRecord::Base
 	validates_attachment_presence :data
 	
 	belongs_to :attachable, :polymorphic => true
+	
+	before_post_process :is_image?
+	def is_image?
+	  !(self.data.content_type =~ /^image/).nil?
+	end
 end
