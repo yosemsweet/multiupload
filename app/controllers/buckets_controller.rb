@@ -25,6 +25,7 @@ class BucketsController < ApplicationController
   # GET /buckets/new.json
   def new
     @bucket = Bucket.new
+		@bucket.assets.build
 
     respond_to do |format|
       format.html # new.html.erb

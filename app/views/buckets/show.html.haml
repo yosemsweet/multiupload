@@ -3,6 +3,10 @@
 %p
   %b Name:
   = @bucket.name
+  
+%p
+  %b Assets
+  = render @bucket.assets
 
 = link_to 'Edit', edit_bucket_path(@bucket)
 \|

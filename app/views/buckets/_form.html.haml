@@ -9,5 +9,14 @@
   .field
     = f.label :name
     = f.text_field :name
+  .field
+    %legend Assets
+    = f.fields_for :assets do |asset_f|
+      = render "asset_fields", :f => asset_f
+
+    = f.fields_for :assets, @bucket.assets.build do |asset_f|
+      = asset_f.label :data, "Upload a file"
+      = asset_f.file_field :data, :class => 'file_input'
+      
   .actions
     = f.submit 'Save'

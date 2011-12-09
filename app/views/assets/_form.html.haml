@@ -1,0 +1,18 @@
+= form_for [@bucket, @asset]  do |f|
+  -if @asset.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@asset.errors.count, "error")} prohibited this image from being saved:"
+      %ul
+        - @image.errors.full_messages.each do |msg|
+          %li= msg
+
+  %fieldset
+    %legend Upload an image
+    .field.clearfix
+      = f.label :source
+      .input
+        = f.file_field :data
+        %span.help-block jpgs, pngs, bmps, and gifs allowed.
+  
+  .actions
+    = f.submit 'Save'
