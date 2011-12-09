@@ -42,6 +42,7 @@ class BucketsController < ApplicationController
   # POST /buckets.json
   def create
     @bucket = Bucket.new(params[:bucket])
+		debugger
 
     respond_to do |format|
       if @bucket.save

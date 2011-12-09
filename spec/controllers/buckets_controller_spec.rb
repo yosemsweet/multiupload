@@ -24,7 +24,7 @@ describe BucketsController do
   # Bucket. As you add validations to Bucket, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    Factory.attributes_for(:bucket)
   end
 
   describe "GET index" do
@@ -76,6 +76,15 @@ describe BucketsController do
         post :create, :bucket => valid_attributes
         response.should redirect_to(Bucket.last)
       end
+
+			it "accepts nested parameters for assets_attributes" do
+				params = valid_attributes.merge(:assets_attributes => [Factory.attributes_for(:asset)])
+				debugger
+				post :create, :bucket => params
+				assigns(:bucket).should be_a(Bucket)
+        assigns(:bucket).should be_persisted
+				assigns(:bucket).assets.should_not be_empty
+			end
     end
 
     describe "with invalid params" do
