@@ -47,7 +47,8 @@ gem "cucumber-rails", ">= 1.2.0", :group => :test
 gem "capybara", ">= 1.1.2", :group => :test
 gem "database_cleaner", ">= 0.7.0", :group => :test
 gem "launchy", ">= 2.0.5", :group => :test
-gem "guard", ">= 0.6.2", :group => :development
+gem 'spork', '>=0.9.0.rc9', :group => [:development, :test]
+gem "guard", ">= 0.6.2", :group => [:development, :test]
 case HOST_OS
   when /darwin/i
     gem 'rb-fsevent', :group => :development
@@ -55,14 +56,9 @@ case HOST_OS
   when /linux/i
     gem 'libnotify', :group => :development
     gem 'rb-inotify', :group => :development
-  when /mswin|windows/i
-    gem 'rb-fchange', :group => :development
-    gem 'win32console', :group => :development
-    gem 'rb-notifu', :group => :development
 end
 gem "guard-bundler", ">= 0.1.3", :group => :development
-gem "guard-rails", ">= 0.0.3", :group => :development
-gem "guard-cucumber", ">= 0.6.1", :group => :development
-gem "guard-spin", :group => :development
+gem "guard-cucumber", ">= 0.6.1", :group => [:development, :test]
+gem "guard-spork", :group => [:development, :test]
 gem "rails-footnotes", ">= 3.7", :group => :development
 gem "bootstrap-sass"
