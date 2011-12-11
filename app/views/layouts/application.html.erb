@@ -8,7 +8,13 @@
 </head>
 <body>
 
-<%= yield %>
+<div class="container">
+	<div id="header" class="container sidebar">
+		<%= yield :header %>
+	</div>
+	<div class="content">
+		<%= yield %>
+	</div>
 
 </body>
 </html>

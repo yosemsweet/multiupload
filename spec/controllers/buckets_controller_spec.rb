@@ -79,7 +79,7 @@ describe BucketsController do
 
 			it "accepts nested parameters for assets_attributes" do
 				params = valid_attributes.merge(:assets_attributes => [Factory.attributes_for(:asset)])
-				debugger
+
 				post :create, :bucket => params
 				assigns(:bucket).should be_a(Bucket)
         assigns(:bucket).should be_persisted

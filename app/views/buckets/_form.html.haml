@@ -15,8 +15,14 @@
       = render "asset_fields", :f => asset_f
 
     = f.fields_for :assets, @bucket.assets.build do |asset_f|
+      #dropbox.dropbox
+        %span Drop your files here to upload them
+      
       = asset_f.label :data, "Upload a file"
-      = asset_f.file_field :data, :class => 'file_input'
+      = asset_f.file_field :data, :class => 'file_input', :multiple => true
+      
+      #bag
+        %span Files
       
   .actions
     = f.submit 'Save'

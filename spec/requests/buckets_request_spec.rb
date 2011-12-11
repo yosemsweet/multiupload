@@ -27,14 +27,12 @@ describe "Buckets" do
 			context "with asset parameters" do
 				let(:params) {
 					Factory.attributes_for(:bucket, 
-						:assets_attributes => [ {:data => File.new(Rails.root + 'spec/fixtures/files/test.png')} ]
+						:assets_attributes => [Factory.attributes_for(:asset) ]
 					) 
 				}
 				
 				it "should redirect to the new bucket" do
-					post "/buckets", :bucket => Factory.attributes_for(:bucket, 
-						:assets_attributes => [ {:data => File.new(Rails.root + 'spec/fixtures/files/test.png')} ] 
-					)
+					post "/buckets", params
 					response.should redirect_to(bucket_path(Bucket.last))
 				end
 				
