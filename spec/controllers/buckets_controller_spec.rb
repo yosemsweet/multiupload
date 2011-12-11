@@ -77,13 +77,22 @@ describe BucketsController do
         response.should redirect_to(Bucket.last)
       end
 
-			it "accepts nested parameters for assets_attributes" do
-				params = valid_attributes.merge(:assets_attributes => [Factory.attributes_for(:asset)])
+			it "accepts a single nested parameter for assets_attributes" do
+				params = valid_attributes.merge(:assets_attributes => { "0" => Factory.attributes_for(:asset) })
 
 				post :create, :bucket => params
 				assigns(:bucket).should be_a(Bucket)
         assigns(:bucket).should be_persisted
 				assigns(:bucket).assets.should_not be_empty
+			end
+			
+			it "accepts multiple nested parameters for assets_attributes" do
+				params = { :assets_attributes => { "0" => Factory.attributes_for(:asset), "1" => Factory.attributes_for(:image_asset) } }
+
+				post :create, :bucket => params
+				assigns(:bucket).should be_a(Bucket)
+        assigns(:bucket).should be_persisted
+				assigns(:bucket).assets.count.should == 2
 			end
     end
 
@@ -127,6 +136,32 @@ describe BucketsController do
         put :update, :id => bucket.id, :bucket => valid_attributes
         response.should redirect_to(bucket)
       end
+
+			it "accepts a single nested parameter for assets_attributes" do
+	      bucket = Bucket.create! valid_attributes
+				params = { 
+					:assets_attributes => { "0" => Factory.attributes_for(:asset) }
+				}
+
+				put :update, :id => bucket.id, :bucket => params
+				assigns(:bucket).should be_a(Bucket)
+        assigns(:bucket).should be_persisted
+				assigns(:bucket).assets.should_not be_empty
+			end
+			
+			it "accepts multiple nested parameters for assets_attributes" do
+	      bucket = Bucket.create! valid_attributes
+				params = { 
+					:assets_attributes => { 
+						"0" => Factory.attributes_for(:asset),
+						"1" => Factory.attributes_for(:image_asset) 
+					}
+				}
+				put :update, :id => bucket.id, :bucket => params
+				assigns(:bucket).should be_a(Bucket)
+        assigns(:bucket).should be_persisted
+				assigns(:bucket).assets.count.should == 2
+			end
     end
 
     describe "with invalid params" do

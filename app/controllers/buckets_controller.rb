@@ -1,4 +1,6 @@
 class BucketsController < ApplicationController
+	before_filter :extract_multiple_assets, :only => [:update, :create]
+	
   # GET /buckets
   # GET /buckets.json
   def index
@@ -81,4 +83,15 @@ class BucketsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+	protected
+	
+	def extract_multiple_assets
+		if params[:bucket][:assets_attributes]
+			
+		end
+		
+		return true
+	end
+	
 end
