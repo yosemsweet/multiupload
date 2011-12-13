@@ -14,7 +14,7 @@
     = f.fields_for :assets do |asset_f|
       = render "asset_fields", :f => asset_f
 
-    = f.fields_for :assets do |asset_f|
+    = f.fields_for :assets, @bucket.assets.build do |asset_f|
       #dropbox.dropbox
         %span Drop your files here to upload them
       
