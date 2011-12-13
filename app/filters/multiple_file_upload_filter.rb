@@ -9,14 +9,18 @@ module MultipleFileUploadFilter
 		params["assets_attributes"].try(:each) do |k, v|
 			v = [v] unless v.kind_of? Array
 			v.each do |asset|
-				data = if asset[:data].kind_of? Array
-						asset[:data]
-					else
-						[asset[:data]] 
-					end
+				if asset.has_key? :data
+					data = if asset[:data].kind_of? Array
+							asset[:data]
+						else
+							[asset[:data]] 
+						end
 					
-				data.each do |d|
-					new_assets[new_assets.count.to_s] = { :data => d }
+					data.each do |d|
+						new_assets[new_assets.count.to_s] = { :data => d }
+					end
+				else
+						new_assets[new_assets.count.to_s] = v
 				end
 			end
 		end

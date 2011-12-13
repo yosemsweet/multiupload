@@ -149,6 +149,19 @@ describe BucketsController do
 				assigns(:bucket).assets.should_not be_empty
 			end
 			
+			it "accepts destroy command for nested parameters for assets_attributes" do
+	      bucket = Bucket.create! valid_attributes
+				bucket.assets.create(Factory.attributes_for(:asset))
+				params = { 
+					:assets_attributes => { "0" => {"_destroy"=>"1", "id"=>bucket.assets.last.id.to_s } }
+				}
+
+				put :update, :id => bucket.id, :bucket => params
+				assigns(:bucket).should be_a(Bucket)
+        assigns(:bucket).should be_persisted
+				assigns(:bucket).assets.should be_empty
+			end
+			
 			it "accepts multiple nested parameters for assets_attributes" do
 	      bucket = Bucket.create! valid_attributes
 				params = { 

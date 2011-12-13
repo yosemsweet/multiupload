@@ -68,6 +68,22 @@ describe MultipleFileUploadFilter do
 				it 'should not change params' do
 					MultipleFileUploadFilter.map_multiple_uploads(params).should == params
 				end
+				
+				context "asking for an asset to be destroyed" do
+					before(:each) do
+						@attribute_to_destroy = {"_destroy"=>"1", "id"=>"8"}
+					end
+					
+					let(:params) {
+						{
+							"assets_attributes" => {"0"=> @attribute_to_destroy }
+						}
+					}
+					
+					it "should not change the destroyed parameter" do
+						MultipleFileUploadFilter.map_multiple_uploads(params["assets_attributes"]).should have_value(@attribute_to_destroy)
+					end
+				end
 
 				context 'with an array of assets inside an indexed hash' do
 					before(:each) do
