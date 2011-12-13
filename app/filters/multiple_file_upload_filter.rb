@@ -1,4 +1,5 @@
 module MultipleFileUploadFilter
+	
 	def self.map_multiple_uploads(params)
 		assets_attributes = params["assets_attributes"]
 		

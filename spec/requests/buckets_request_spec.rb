@@ -84,23 +84,24 @@ describe "Buckets" do
 			
 			context "with actual parameters from live system" do
 				it "should work" do
+					tmp = File.new(Rails.root + 'spec/fixtures/files/test.txt')
+					fileOne = Rack::Test::UploadedFile.new(tmp, "text/txt")
+					tmp.close
+					tmp = File.new(Rails.root + 'spec/fixtures/files/test.png')
+					fileTwo = Rack::Test::UploadedFile.new(tmp, "image/png")
+					tmp.close
+					
 					params = {
-						"utf8"=>"✓", 
-						"authenticity_token"=>"V7x7yoQQSMqkeWa2Mw2ohjcqh68XShqY6PrDGQsDBks=", 
-						"bucket"=>{
-							"name"=>"test", 
-							"assets_attributes"=>
-								{
-									"0"=>
-										{"_destroy"=>"0"}, 
-									"1"=>
-										{"data"=>[#<ActionDispatch::Http::UploadedFile:0x00000104ae8bc0 @original_filename="test.png", @content_type="image/png", @headers="Content-Disposition: form-data; name=\"bucket[assets_attributes][1][data][]\"; filename=\"test.png\"\r\nContent-Type: image/png\r\n", @tempfile=#<File:/var/folders/xz/s5_8w3z137d_t34fvkdy70t4000102/T/RackMultipart20111211-56637-rprc1p>>,
-											 				#<ActionDispatch::Http::UploadedFile:0x00000104ae8af8 @original_filename="test.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"bucket[assets_attributes][1][data][]\"; filename=\"test.txt\"\r\nContent-Type: text/plain\r\n", @tempfile=#<File:/var/folders/xz/s5_8w3z137d_t34fvkdy70t4000102/T/RackMultipart20111211-56637-19hm4wo>>]
-										}
-								}
-							}, 
-						"commit"=>"Save"
+						"name"=>"test", 
+						"assets_attributes"=> {
+							"0"=> {"_destroy"=>"0"}, 
+							"1"=> {"data"=>[fileOne, fileTwo ]}
+						}
 					}
+					
+					lambda do
+						post "/buckets", :bucket => params
+					end.should change(Bucket, :count).by(1)
 				end
 			end
 		end

@@ -1,5 +1,7 @@
 class BucketsController < ApplicationController
-	before_filter :extract_multiple_assets, :only => [:update, :create]
+	before_filter :only => [:update, :create] do |c|
+		c.params[:bucket] = MultipleFileUploadFilter.map_multiple_uploads(c.params[:bucket])
+	end
 	
   # GET /buckets
   # GET /buckets.json
