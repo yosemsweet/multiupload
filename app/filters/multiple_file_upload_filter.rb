@@ -1,12 +1,13 @@
 module MultipleFileUploadFilter
 	
 	def self.map_multiple_uploads(params)
-		assets_attributes = params["assets_attributes"]
+		p_copy = params.clone
+		assets_attributes = p_copy["assets_attributes"]
 		
-		params["assets_attributes"] = array_to_indexed_hash(assets_attributes) if assets_attributes.kind_of?(Array)
+		p_copy["assets_attributes"] = array_to_indexed_hash(assets_attributes) if assets_attributes.kind_of?(Array)
 
 		new_assets = {}
-		params["assets_attributes"].try(:each) do |k, v|
+		p_copy["assets_attributes"].try(:each) do |k, v|
 			v = [v] unless v.kind_of? Array
 			v.each do |asset|
 				if asset.has_key? :data
@@ -20,13 +21,13 @@ module MultipleFileUploadFilter
 						new_assets[new_assets.count.to_s] = { :data => d }
 					end
 				else
-						new_assets[new_assets.count.to_s] = v
+						new_assets[new_assets.count.to_s] = asset
 				end
 			end
 		end
 
-		params["assets_attributes"] = new_assets unless new_assets.empty?
-		params
+		p_copy["assets_attributes"] = new_assets unless new_assets.empty?
+		p_copy
 	end
 	
 	private

@@ -66,7 +66,12 @@ describe MultipleFileUploadFilter do
 				}
 
 				it 'should not change params' do
-					MultipleFileUploadFilter.map_multiple_uploads(params).should == params
+					MultipleFileUploadFilter.map_multiple_uploads(params).should == {
+						"assets_attributes" => {
+							"0" => @assets[0],
+							"1" => @assets[1]
+						}
+					}
 				end
 				
 				context "asking for an asset to be destroyed" do
@@ -81,7 +86,7 @@ describe MultipleFileUploadFilter do
 					}
 					
 					it "should not change the destroyed parameter" do
-						MultipleFileUploadFilter.map_multiple_uploads(params["assets_attributes"]).should have_value(@attribute_to_destroy)
+						MultipleFileUploadFilter.map_multiple_uploads(params).should == params
 					end
 				end
 
